@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TTMSB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SpotName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fee" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Available" Type="Boolean" Nullable="false" />
+    <Property Name="TypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TourType" Relationship="Self.FK__Booking__TypeId__2A4B4B5E" FromRole="Booking" ToRole="TourType" />
+    <NavigationProperty Name="EntrySpots" Relationship="Self.FK__EntrySpot__Booki__2B3F6F97" FromRole="Booking" ToRole="EntrySpots" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientId" />
+    </Key>
+    <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="EntrySpots" Relationship="Self.FK__EntrySpot__Clien__2C3393D0" FromRole="Client" ToRole="EntrySpots" />
+  </EntityType>
+  <EntityType Name="EntrySpot">
+    <Key>
+      <PropertyRef Name="EntrySpotId" />
+    </Key>
+    <Property Name="EntrySpotId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientId" Type="Int32" Nullable="false" />
+    <Property Name="BookingId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Self.FK__EntrySpot__Booki__2B3F6F97" FromRole="EntrySpots" ToRole="Booking" />
+    <NavigationProperty Name="Client" Relationship="Self.FK__EntrySpot__Clien__2C3393D0" FromRole="EntrySpots" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="TourType">
+    <Key>
+      <PropertyRef Name="TypeId" />
+    </Key>
+    <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__TypeId__2A4B4B5E" FromRole="TourType" ToRole="Booking" />
+  </EntityType>
+  <Association Name="FK__Booking__TypeId__2A4B4B5E">
+    <End Role="TourType" Type="Self.TourType" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TourType">
+        <PropertyRef Name="TypeId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EntrySpot__Booki__2B3F6F97">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+    <End Role="EntrySpots" Type="Self.EntrySpot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="EntrySpots">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EntrySpot__Clien__2C3393D0">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="EntrySpots" Type="Self.EntrySpot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="EntrySpots">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TTMSB2DbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bookings" EntityType="Self.Booking" />
+    <EntitySet Name="Clients" EntityType="Self.Client" />
+    <EntitySet Name="EntrySpots" EntityType="Self.EntrySpot" />
+    <EntitySet Name="TourTypes" EntityType="Self.TourType" />
+    <AssociationSet Name="FK__Booking__TypeId__2A4B4B5E" Association="Self.FK__Booking__TypeId__2A4B4B5E">
+      <End Role="TourType" EntitySet="TourTypes" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EntrySpot__Booki__2B3F6F97" Association="Self.FK__EntrySpot__Booki__2B3F6F97">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="EntrySpots" EntitySet="EntrySpots" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EntrySpot__Clien__2C3393D0" Association="Self.FK__EntrySpot__Clien__2C3393D0">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="EntrySpots" EntitySet="EntrySpots" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

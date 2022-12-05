@@ -1,0 +1,30 @@
+﻿@model evidence_work.Models.TourType
+@using (Ajax.BeginForm("CreateTourType", "TourType", new { }, new AjaxOptions
+{
+    HttpMethod = "Post",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "alert",
+    OnSuccess = "onSuccess",
+    LoadingElementId = "spinner"
+}, new { id = "f" }))
+{
+    <div class="form-group row mb-1">
+        @Html.LabelFor(x => x.TypeName, new { @class = "col-form-label col-form-label-sm col-2" })
+        <div class="col-4">
+            @Html.TextBoxFor(x => x.TypeName, new { @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(x => x.TypeName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row mb-1">
+
+        <div class="col-4 offset-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+}
+
+
+
+
+

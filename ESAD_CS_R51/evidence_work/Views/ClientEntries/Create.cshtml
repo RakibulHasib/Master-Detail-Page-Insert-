@@ -1,0 +1,130 @@
+﻿@model evidence_work.ViewModel.BookingEntryInputModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div id="alert"></div>
+        <div id="spinner" style="display:none">
+            <div class="d-flex align-items-center text-primary">
+                <span>Loading...</span>
+                <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @using (Ajax.BeginForm("Create", "ClientEntries", new { }, new AjaxOptions
+        {
+            HttpMethod = "Post",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "alert",
+            OnSuccess = "actionDone",
+            LoadingElementId = "spinner"
+        }, new { id = "f", enctype = "multipart/form-data" }))
+        {
+            <div class="row" style="background-color:mistyrose">
+                <div class="col-6">
+                    <h3>Client Info</h3>
+                    <div class="form-group mb-1">
+                        @Html.LabelFor(x => x.ClientName, new { @class = "col-form-label col-2" })
+                        <div class="col-10">
+                            @Html.TextBoxFor(x => x.ClientName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ClientName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group mb-1">
+                        @Html.LabelFor(x => x.Age, new { @class = "col-form-label col-2" })
+                        <div class="col-10">
+                            @Html.TextBoxFor(x => x.Age, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Age, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group mb-1">
+                        @Html.LabelFor(x => x.BirthDate, new { @class = "col-form-label col-2" })
+                        <div class="col-10">
+                            @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(x => x.BirthDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group mb-1">
+                        @Html.LabelFor(x => x.Picture, new { @class = "col-form-label col-2" })
+                        <div class="col-10">
+                            @Html.TextBoxFor(x => x.Picture, new { @class = "form-control", type = "file" })
+                            @Html.ValidationMessageFor(x => x.Picture, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="d-flex justify-content-between mb-1">
+                        <h4>Booking Info</h4>
+                        <button type="button" id="add" class="btn btn-secondary btn-sm mt-5">+</button>
+                    </div>
+                    <div id="child">
+                        @Html.Action("CreateClientEntry")
+                    </div>
+
+                    <div class="form-group mb-1">
+
+                        <div class="col-4 offset-2 mt-5">
+                            <button type="submit" class="btn btn-primary">Save</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.6.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        $(() => {
+
+            $(document).on("change", ".select", function () {
+                var p = $(this).attr("id");
+                console.log(p);
+                var q = $(this).parent().parent().find("#Fee");
+                console.log(q);
+                $.ajax({
+                    type: "POST",
+                    url: '/ClientEntries/GetFee/' + $(this).val(),
+                    dataType: "json",
+                    success: data => {
+                        console.log(data);
+                        q.val(data);
+                    }
+                });
+            })
+
+            $("#add").click(() => {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/ClientEntries/CreateClientEntry",
+
+                    success: r => {
+                        console.log(r);
+                        $("#child").append(r);
+                    }
+                });
+            });
+        });
+
+        function actionDone() {
+            setTimeout(function () {
+                window.location.href = "/ClientEntries/Index";
+            }, 2000);
+        }
+    </script>
+}
+

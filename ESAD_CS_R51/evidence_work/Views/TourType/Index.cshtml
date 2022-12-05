@@ -1,0 +1,36 @@
+﻿@model IEnumerable<evidence_work.Models.TourType>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3>Tour Types</h3>
+        <div class="d-flex justify-content-end mb-1">
+            @Html.ActionLink("Add New", "Create", "TourType", new { }, new { @class = "btn btn-primary btn-sm" })
+        </div>
+        <table class="table table-bordered">
+            <thead class="bg-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.TypeName)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => d.TypeName)</td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "TourType", new { id = d.TypeId }, new { @class = "btn btn-success btn-sm" })
+                            <a href="@Url.Action("Delete", "TourType", new {id=d.TypeName})" class="btn btn-danger btn-sm @(d.Bookings.Count > 0 ? "disabled" :"")">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

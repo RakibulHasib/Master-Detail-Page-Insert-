@@ -1,0 +1,17 @@
+﻿
+@model evidence_work.ViewModel.BookingViewModel
+<div class="form-group row mb-1">
+    @Html.LabelFor(x => x.BookingId, new { @class = "col-form-label col-2" })
+    <div class="col-4">
+        @Html.DropDownListFor(x => x.BookingId, new SelectList(ViewBag.Bookings, "BookingId", "SpotName"), "Select one", new { @class = "form-select select" })
+        @Html.ValidationMessageFor(x => x.BookingId, "", new { @class = "text-danger" })
+    </div>
+    @Html.LabelFor(x => x.Fee, new { @class = "col-form-label col-2" })
+    <div class="col-4">
+
+        @Html.TextBoxFor(x => x.Fee, new { @class = "form-control", @readonly = "true" })
+
+    </div>
+</div>
+
+

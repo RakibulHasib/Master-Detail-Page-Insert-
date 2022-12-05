@@ -1,0 +1,68 @@
+﻿@model evidence_work.ViewModel.BookingEntryInputModel
+<div class="row">
+    <div class="col-12">
+        <h3>Create new booking entry</h3>
+        @using (Html.BeginForm("Create", "ClientEntries", FormMethod.Post, new { id = "f", enctype = "multipart/form-data" }))
+        {
+            <div class="form-group mb-1">
+                @Html.LabelFor(x => x.ClientName, new { @class = "col-form-label col-2" })
+                <div class="col-4">
+                    @Html.TextBoxFor(x => x.ClientName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.ClientName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mb-1">
+                @Html.LabelFor(x => x.Age, new { @class = "col-form-label col-2" })
+                <div class="col-4">
+                    @Html.TextBoxFor(x => x.Age, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Age, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mb-1">
+                @Html.LabelFor(x => x.BirthDate, new { @class = "col-form-label col-2" })
+                <div class="col-4">
+                    @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.BirthDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mb-1">
+                @Html.LabelFor(x => x.Picture, new { @class = "col-form-label col-2" })
+                <div class="col-4">
+                    @Html.TextBoxFor(x => x.Picture, new { @class = "form-control", type = "file" })
+                    @Html.ValidationMessageFor(x => x.Picture, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+                <h4>Tests</h4>
+                <button type="button" id="add" class="btn btn-secondary btn-sm">+</button>
+            </div>
+            for (var i = 0; i < Model.Bookings.Count; i++)
+            {
+
+                <div class="form-group row mb-1">
+                    @Html.LabelFor(x => Model.Bookings[i].BookingId, new { @class = "col-form-label col-2" })
+                    <div class="col-4">
+                        @Html.DropDownListFor(x => Model.Bookings[i].BookingId, new SelectList(ViewBag.Bookings, "BookingId", "SpotName"), "Select one", new { @class = "form-select select" })
+                        @Html.ValidationMessageFor(x => x.Picture, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(x => Model.Bookings[i].Fee, new { @class = "col-form-label col-2" })
+                    <div class="col-4">
+
+                        @Html.TextBoxFor(x => Model.Bookings[i].Fee, new { @class = "form-control", @readonly = "true" })
+
+                    </div>
+                </div>
+
+
+
+            }
+            <div class="form-group mb-1">
+
+                <div class="col-4 offset-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

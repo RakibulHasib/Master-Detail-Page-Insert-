@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+<div class="row">
+    <div class="col-12">
+        <div id="alert"></div>
+        <div id="spinner" style="display:none">
+            <div class="d-flex align-items-center text-primary">
+                <span>Loading...</span>
+                <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <h3>Add new TourType</h3>
+        @Html.Action("CreateTourType")
+    </div>
+    <div class="col-12">
+
+        @Html.ActionLink("Back to list", "Index")
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/jquery-3.6.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function onSuccess() {
+            $("#f").trigger('reset')
+        };
+    </script>
+
+}
+

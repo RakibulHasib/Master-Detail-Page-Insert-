@@ -1,0 +1,71 @@
+﻿
+@model IEnumerable<evidence_work.Models.Client>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-12" style="background-color:lavender">
+        <h3>Client and Booking Information</h3>
+        <div class="d-flex justify-content-end mb-1">
+            @Html.ActionLink("Create New", "Create", "ClientEntries", new { }, new { @class = "btn btn-primary btn-sm" })
+        </div>
+        <table class="table table-bordered">
+            <thead class="bg-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(t => t.Picture)</th>
+                    <th>@Html.DisplayNameFor(t => t.ClientName)</th>
+                    <th>@Html.DisplayNameFor(t => t.Age)</th>
+                    <th>@Html.DisplayNameFor(t => t.BirthDate)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td style="width:70px" class="text-center">
+                            <img src="~/Uploads/@x.Picture" style="width:40px" class="rounded-circle" />
+                        </td>
+                        <td>@Html.DisplayFor(t => x.ClientName)</td>
+                        <td>@Html.DisplayFor(t => x.Age)</td>
+                        <td>@Html.DisplayFor(t => x.BirthDate)</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "ClientEntries")" class="btn btn-success btn-sm">Edit</a>
+                            <a href="@Url.Action("Delete", "ClientEntries")" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border-end-0">&nbsp;</td>
+                        <td colspan="6" class="border-start-0">
+                            <h4>Booking</h4>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Spot Name</th>
+                                        <th>Cost</th>
+                                        <th>Availble</th>
+                                    </tr>
+
+                                </thead>
+                                @foreach (var y in x.EntrySpots)
+                                {
+                                    <tr>
+                                        <td>@y.Booking.SpotName</td>
+                                        <td class="text-end">@y.Booking.Fee.ToString("0.00")</td>
+                                        <td>@y.Booking.Available.ToString()</td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+

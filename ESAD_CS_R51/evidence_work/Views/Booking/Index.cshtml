@@ -1,0 +1,40 @@
+﻿@model IEnumerable<evidence_work.Models.Booking>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3>Booking Info</h3>
+        <div class="d-flex justify-content-end mb-1">
+            @Html.ActionLink("Add New", "Create", "Booking", new { }, new { @class = "btn btn-primary btn-sm" })
+        </div>
+        <table class="table table-bordered">
+            <thead class="bg-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.SpotName)</th>
+                    <th>@Html.DisplayNameFor(x => x.Fee)</th>
+                    <th>@Html.DisplayNameFor(x => x.TypeId)</th>
+                    <th>@Html.DisplayNameFor(x => x.Available)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => d.SpotName)</td>
+                        <td>@Html.DisplayFor(x => d.Fee)</td>
+                        <td>@Html.DisplayFor(x => d.TourType.TypeName)</td>
+                        <td>@(d.Available ? "Yes": "No")</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Booking", new { id = d.BookingId }, new { @class = "btn btn-success btn-sm" })
+                            <a href="@Url.Action("Delete", "Booking", new {id=d.BookingId})" class="btn btn-danger btn-sm @(d.EntrySpots.Count > 0 ? "disabled" :"")">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
