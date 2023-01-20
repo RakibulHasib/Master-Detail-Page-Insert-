@@ -1,4 +1,4 @@
-# Master-Detail-Page-Insert-
+# Master-Detail-Page-Insert-Using ASP.NET MVC
 I created this project about travel management system. In this project I applied master detail page data insert.
 ///To see this web applications implementation
 **you need to excute script file.you can execute any of them.**
